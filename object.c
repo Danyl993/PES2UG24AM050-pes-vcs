@@ -93,13 +93,14 @@ int object_write(ObjectType type, const void *data, size_t len, ObjectID *id_out
     object_path(id_out, final_path, sizeof(final_path));
 
     char dir_path[512];
-    strcpy(dir_path, final_path);
+snprintf(dir_path, sizeof(dir_path), "%s", final_path);
     char *slash = strrchr(dir_path, '/');
     if (!slash) {
         free(full_data);
         return -1;
     }
     *slash = '\0';
+    mkdir(OBJECTS_DIR, 0755);
 
     mkdir(dir_path, 0755);
 
